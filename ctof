@@ -1,0 +1,54 @@
+#Title: ctof.asm
+#author: gabriel alirez
+#purpose: conver celcius to fahrenheit
+
+
+.data
+celcius: .asciiz "Please enter the temperature in celsius "
+far: .asciiz " degrees fahrenheit"
+cel: .asciiz " degrees celsius is equal to "
+.text
+#constants
+li $s0,9
+li $s1,5
+li $s2,32
+
+li $v0,4
+la $a0,celcius
+syscall
+
+li $v0,5
+syscall
+
+#doing the math
+move $t0,$v0
+
+mult $t0,$s0
+
+mflo $t1
+
+div $t1,$s1
+mflo $t2
+
+add $t3,$t2,$s2
+
+#printing everything out
+move $a0,$t0
+li $v0,1
+syscall
+
+li $v0,4
+la $a0,cel
+syscall
+
+move $a0,$t3
+li $v0,1
+syscall
+
+li $v0,4
+la $a0,far
+syscall
+
+jal exit
+
+.include "util.asm"

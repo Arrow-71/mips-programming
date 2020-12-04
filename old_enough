@@ -1,0 +1,36 @@
+#title: old_enough
+#Author: gabriel alirez
+#purpose: translate python to mips
+
+.data
+age: .asciiz "how old are you "
+yes: .asciiz "have you registered to vote?"
+ 
+
+.text
+main:
+#asks for interger
+li $v0,4
+la $a0,age
+syscall
+
+add $s0,$zero,18
+
+
+#saves users interger
+li $v0,5
+syscall
+
+move $t0,$v0
+
+bge $s0,$t0,yes
+
+ask:
+la $a0,yes
+jal PrintString
+
+
+jal exit
+
+
+.include "util.asm"

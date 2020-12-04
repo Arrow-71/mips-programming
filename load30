@@ -1,0 +1,23 @@
+.data
+a: .word 0
+b: .word 10
+   .space 24
+c: .word 20
+result: .asciiz "You entered: "
+
+.text
+
+add $t0,$zero,30
+
+sw $t0,c
+
+lw $t2,c
+
+la $a0, result
+move $a1, $t2
+jal PrintInt
+
+
+jal exit
+
+.include "util.asm"

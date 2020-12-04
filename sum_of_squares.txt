@@ -1,0 +1,67 @@
+#title: sum_of_squares
+#author: Gabriel Alirez
+#purpose: take 3 numbers in, square them, and add their sums together
+.data
+
+int: .asciiz "please enter three numbers\n"
+answer: .asciiz "your sum of squares is\n"
+
+.text
+li $v0,4
+la $a0,int
+syscall
+
+jal sum_of_squares
+jal exit
+
+#takes in number and squares it
+square:
+addi $sp, $sp, -4
+sw $ra, 0($sp)
+
+li $v0,5
+syscall
+
+move $a1,$v0
+
+mult $a1,$a1
+
+mflo $v1
+
+lw $ra, 0($sp) 
+addi $sp, $sp, 4
+
+jr $ra
+
+#this calls the square subprogram and adds the sums together.
+sum_of_squares:
+addi $sp, $sp, -4
+sw $ra, 0($sp)
+
+jal square
+move $t0,$v1
+
+jal square
+move $t1,$v1
+
+jal square
+move $t2,$v1
+
+add  $t3,$t2,$t1
+
+add $t8,$t0,$t3
+
+li $v0,4
+la $a0,answer
+syscall
+
+move $a0,$t8
+li $v0,1
+syscall   
+
+lw $ra, 0($sp) 
+addi $sp, $sp, 4
+
+jr $ra
+
+.include "util.asm"

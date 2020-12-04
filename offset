@@ -1,0 +1,28 @@
+.data
+.word 0
+.word 10
+.space 24
+.word 20
+result: .asciiz "You entered: "
+.text
+lui $t0, 0x1001
+lw $t5, 0($t0)
+lw $t6, 4($t0)
+lw $t7, 32($t0)
+
+la $a0, result
+move $a1, $t5
+jal PrintInt
+jal PrintNewLine
+
+la $a0, result
+move $a1, $t6
+jal PrintInt
+jal PrintNewLine
+
+la $a0, result
+move $a1, $t7
+jal PrintInt
+
+jal exit
+.include "util.asm"
